@@ -1,0 +1,27 @@
+{
+  "profile": "EF-PAY-1",
+  "canonicalization": "EF-JCS-SUBSET-1",
+  "digest_algorithm": "SHA-256",
+  "digest_encoding": "base64url-without-padding",
+  "instruction": {
+    "act_type": "INSTANT_CREDIT",
+    "payer_id": "enterprise-7",
+    "payer_account_ref": "acct-payer-1",
+    "amount": "150",
+    "currency": "EUR",
+    "beneficiary_id": "vendor-441",
+    "beneficiary_account_ref": "acct-vendor-441",
+    "beneficiary_jurisdiction": "",
+    "rail_id": "SEPA_INSTANT",
+    "purpose_id": "invoice-pay",
+    "mandate_id": "mandate-vendors",
+    "invoice_ref": "INV-2026-441",
+    "end_to_end_id": "",
+    "agent_id": "ap-agent-1",
+    "workload_id": "spiffe://example/ap-agent/1"
+  },
+  "expected_normalized_amount": "150.00",
+  "expected_canonical_utf8": "{\"act_type\":\"INSTANT_CREDIT\",\"amount\":\"150.00\",\"beneficiary\":{\"account_ref\":\"acct-vendor-441\",\"beneficiary_id\":\"vendor-441\",\"jurisdiction\":\"\"},\"currency\":\"EUR\",\"payer\":{\"account_ref\":\"acct-payer-1\",\"agent_id\":\"ap-agent-1\",\"payer_id\":\"enterprise-7\",\"workload_id\":\"spiffe://example/ap-agent/1\"},\"purpose\":{\"end_to_end_id\":\"\",\"invoice_ref\":\"INV-2026-441\",\"mandate_id\":\"mandate-vendors\",\"purpose_id\":\"invoice-pay\"},\"rail\":{\"rail_id\":\"SEPA_INSTANT\"}}",
+  "expected_digest": "LrJiNPRSNQGNRG9Nd5z8xkRulOxptaITBZj1QadBwH4"
+}
+

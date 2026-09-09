@@ -1,0 +1,22 @@
+{
+  "warning": "Illustrative local software benchmark; not a payment-rail, HSM, KMS, or network SLA.",
+  "target": {"added_hot_path_ms": "1-10", "source": "draft-das-payment-execution-finality-00"},
+  "environment": {
+    "python": "3.12.14",
+    "implementation": "CPython",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
+    "sqlite": "3.53.1",
+    "store": "SQLite :memory:",
+    "authenticator": "HMAC-SHA-256 software reference",
+    "rail": "in-process simulated rail"
+  },
+  "iterations": 1000,
+  "warmup": 100,
+  "results": {
+    "prepare": {"min_ms": 0.0288, "mean_ms": 0.0363, "p50_ms": 0.0316, "p95_ms": 0.0683, "p99_ms": 0.0984, "max_ms": 0.2314},
+    "ped_issue": {"min_ms": 0.1467, "mean_ms": 0.2106, "p50_ms": 0.1648, "p95_ms": 0.3214, "p99_ms": 0.7665, "max_ms": 6.2162},
+    "sink_verify_consume_post": {"min_ms": 0.1259, "mean_ms": 0.1698, "p50_ms": 0.1395, "p95_ms": 0.2614, "p99_ms": 0.4064, "max_ms": 3.2061},
+    "total": {"min_ms": 0.3033, "mean_ms": 0.4167, "p50_ms": 0.3537, "p95_ms": 0.6486, "p99_ms": 1.2040, "max_ms": 6.5356}
+  }
+}
+

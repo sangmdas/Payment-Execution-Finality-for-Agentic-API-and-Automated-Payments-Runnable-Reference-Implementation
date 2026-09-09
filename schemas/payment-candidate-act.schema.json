@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ietf:params:json-schema:payment-finality:candidate-act:1",
+  "title": "PaymentCandidateAct",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "object_type", "candidate_act_id", "act_type", "created_at", "expires_at", "payer", "amount", "currency", "beneficiary", "rail", "purpose", "instruction_digest", "policy_state", "freshness", "finality_sink"],
+  "properties": {
+    "version": {"type": "string", "const": "1.0"},
+    "object_type": {"type": "string", "const": "payment_candidate_act"},
+    "candidate_act_id": {"type": "string", "minLength": 16, "maxLength": 128},
+    "act_type": {"type": "string", "enum": ["CREDIT_TRANSFER", "DIRECT_DEBIT", "CARD_CAPTURE", "CARD_REFUND", "INSTANT_CREDIT", "BOOK_TRANSFER", "STORED_VALUE", "CBDC_TRANSFER", "PAYOUT", "FX_PAYOUT", "OTHER"]},
+    "created_at": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": "string", "format": "date-time"},
+    "payer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["payer_id", "account_ref"],
+      "properties": {
+        "payer_id": {"type": "string"},
+        "payer_type": {"type": "string", "enum": ["person", "merchant", "enterprise", "agent", "service"]},
+        "account_ref": {"type": "string"},
+        "agent_id": {"type": "string"},
+        "workload_id": {"type": "string"}
+      }
+    },
+    "amount": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]{1,18})?$"},
+    "currency": {"type": "string", "minLength": 3, "maxLength": 8},
+    "beneficiary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["beneficiary_id"],
+      "properties": {
+        "beneficiary_id": {"type": "string"},
+        "account_ref": {"type": "string"},
+        "account_digest": {"type": "string"},
+        "name_digest": {"type": "string"},
+        "jurisdiction": {"type": "string"}
+      }
+    },
+    "rail": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rail_id"],
+      "properties": {
+        "rail_id": {"type": "string", "enum": ["ISO20022", "ACH", "SEPA", "SEPA_INSTANT", "FEDNOW", "CARD", "SWIFT", "ON_US", "CBDC", "STORED_VALUE", "OTHER"]},
+        "scheme": {"type": "string"},
+        "clearing_system": {"type": "string"}
+      }
+    },
+    "purpose": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["purpose_id"],
+      "properties": {
+        "purpose_id": {"type": "string"},
+        "declared_purpose": {"type": "string"},
+        "invoice_ref": {"type": "string"},
+        "mandate_id": {"type": "string"},
+        "end_to_end_id": {"type": "string"}
+      }
+    },
+    "instruction_digest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "value", "canonicalization"],
+      "properties": {
+        "algorithm": {"type": "string", "enum": ["SHA-256", "SHA-384", "SHA-512"]},
+        "value": {"type": "string"},
+        "canonicalization": {"type": "string", "enum": ["JCS", "implementation-defined", "EF-JCS-SUBSET-1"]}
+      }
+    },
+    "policy_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_epoch", "revocation_epoch"],
+      "properties": {
+        "policy_epoch": {"type": "integer", "minimum": 0},
+        "revocation_epoch": {"type": "integer", "minimum": 0},
+        "risk_list_epoch": {"type": "integer", "minimum": 0}
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nonce"],
+      "properties": {
+        "nonce": {"type": "string", "minLength": 16},
+        "sequence": {"type": "integer", "minimum": 0},
+        "idempotency_key": {"type": "string"}
+      }
+    },
+    "finality_sink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sink_id", "sink_type"],
+      "properties": {
+        "sink_id": {"type": "string"},
+        "sink_type": {"type": "string", "enum": ["CORE_POST", "PSP_CAPTURE", "ACH_RELEASE", "INSTANT_RELEASE", "CARD_ACQUIRER", "CBDC_ENGINE", "LEDGER_POST", "OTHER"]}
+      }
+    }
+  }
+}
